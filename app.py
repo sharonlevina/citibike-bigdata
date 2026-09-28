@@ -61,15 +61,39 @@ def load_css():
         transform: translateX(3px);
     }
 
+    /* ── Column stretch alignment ── */
+    div[data-testid="column"] {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    div[data-testid="column"] > div {
+        flex: 1 1 auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    div[data-testid="column"] > div > div[data-testid="stMarkdownContainer"] {
+        flex: 1 1 auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        height: 100% !important;
+    }
+
     /* ── Cards ── */
     .metric-card {
         background: #ffffff;
         border: 1px solid #e2e8f0;
         border-radius: 14px;
-        padding: 22px 18px;
+        padding: 20px 14px;
         text-align: center;
         box-shadow: 0 1px 6px rgba(0,0,0,0.06);
         transition: all 0.25s ease;
+        height: 100% !important;
+        min-height: 112px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
     }
     .metric-card:hover {
         border-color: #93c5fd;
@@ -78,18 +102,20 @@ def load_css():
     }
     .metric-value {
         font-family: 'Space Grotesk', sans-serif;
-        font-size: 2rem;
+        font-size: 1.8rem;
         font-weight: 700;
         color: #1d4ed8;
-        line-height: 1.1;
-        margin-bottom: 5px;
+        line-height: 1.15;
+        margin-bottom: 6px;
+        white-space: nowrap;
     }
     .metric-label {
         font-size: 0.72rem;
-        color: #94a3b8;
+        color: #64748b;
         text-transform: uppercase;
-        letter-spacing: 1.2px;
+        letter-spacing: 1.1px;
         font-weight: 600;
+        white-space: nowrap;
     }
 
     /* ── Section headers ── */
@@ -109,10 +135,15 @@ def load_css():
         border: 1px solid #e2e8f0;
         border-left: 4px solid #2563eb;
         border-radius: 12px;
-        padding: 18px 20px;
+        padding: 20px 22px;
         margin-bottom: 12px;
         box-shadow: 0 1px 4px rgba(0,0,0,0.05);
         transition: all 0.2s ease;
+        height: 100% !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        box-sizing: border-box;
     }
     .insight-card:hover {
         box-shadow: 0 4px 14px rgba(37,99,235,0.1);
@@ -120,15 +151,16 @@ def load_css():
     }
     .insight-title {
         font-family: 'Space Grotesk', sans-serif;
-        font-size: 0.95rem;
-        font-weight: 600;
+        font-size: 0.98rem;
+        font-weight: 700;
         color: #1d4ed8;
-        margin-bottom: 7px;
+        margin-bottom: 8px;
     }
     .insight-body {
-        font-size: 0.85rem;
+        font-size: 0.86rem;
         color: #475569;
-        line-height: 1.7;
+        line-height: 1.65;
+        flex-grow: 1;
     }
 
     /* ── Hero ── */

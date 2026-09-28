@@ -42,7 +42,7 @@ def render():
 
     # ── KPI Row ──────────────────────────────────────────────────────────
     kpis = [
-        ("~16 Million", "Total Rides (3 months)"),
+        ("~16.0M", "Total Rides (3 Months)"),
         (f"{len(stations):,}", "Active Stations"),
         (f"{trips['duration_min'].mean():.1f} min", "Avg Ride Duration"),
         (f"{trips['distance_km'].mean():.2f} km", "Avg Distance"),
@@ -126,7 +126,7 @@ def render():
     for col, (title, body) in zip([c1, c2, c3], cards):
         with col:
             st.markdown(f"""
-            <div class='insight-card'>
+            <div class='insight-card' style='min-height: 180px;'>
                 <div class='insight-title'>{title}</div>
                 <div class='insight-body'>{body}</div>
             </div>""", unsafe_allow_html=True)
@@ -154,7 +154,7 @@ def render():
     for col, (title, body) in zip([c1, c2, c3], insights):
         with col:
             st.markdown(f"""
-            <div class='insight-card' style='height:100%;'>
+            <div class='insight-card' style='min-height: 250px;'>
                 <div class='insight-title'>{title}</div>
                 <div class='insight-body'>{body}</div>
             </div>""", unsafe_allow_html=True)
