@@ -62,16 +62,33 @@ def load_css():
     }
 
     /* ── Column stretch alignment ── */
+    div[data-testid="stHorizontalBlock"] {
+        align-items: stretch !important;
+    }
     div[data-testid="column"] {
         display: flex !important;
         flex-direction: column !important;
+        flex: 1 1 auto !important;
     }
     div[data-testid="column"] > div {
         flex: 1 1 auto !important;
         display: flex !important;
         flex-direction: column !important;
+        height: 100% !important;
     }
-    div[data-testid="column"] > div > div[data-testid="stMarkdownContainer"] {
+    div[data-testid="column"] [data-testid="stVerticalBlock"] {
+        flex: 1 1 auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        height: 100% !important;
+    }
+    div[data-testid="column"] [data-testid="stElementContainer"] {
+        flex: 1 1 auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        height: 100% !important;
+    }
+    div[data-testid="column"] [data-testid="stMarkdownContainer"] {
         flex: 1 1 auto !important;
         display: flex !important;
         flex-direction: column !important;
@@ -135,15 +152,15 @@ def load_css():
         border: 1px solid #e2e8f0;
         border-left: 4px solid #2563eb;
         border-radius: 12px;
-        padding: 20px 22px;
+        padding: 22px 24px;
         margin-bottom: 12px;
         box-shadow: 0 1px 4px rgba(0,0,0,0.05);
         transition: all 0.2s ease;
         height: 100% !important;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        box-sizing: border-box;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+        box-sizing: border-box !important;
     }
     .insight-card:hover {
         box-shadow: 0 4px 14px rgba(37,99,235,0.1);
@@ -154,13 +171,17 @@ def load_css():
         font-size: 0.98rem;
         font-weight: 700;
         color: #1d4ed8;
-        margin-bottom: 8px;
+        margin-bottom: 10px;
+        min-height: 48px;
+        display: flex;
+        align-items: flex-start;
+        line-height: 1.35;
     }
     .insight-body {
         font-size: 0.86rem;
         color: #475569;
         line-height: 1.65;
-        flex-grow: 1;
+        flex: 1 1 auto;
     }
 
     /* ── Hero ── */

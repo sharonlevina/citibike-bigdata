@@ -126,7 +126,7 @@ def render():
     for col, (title, body) in zip([c1, c2, c3], cards):
         with col:
             st.markdown(f"""
-            <div class='insight-card' style='min-height: 180px;'>
+            <div class='insight-card' style='min-height: 195px; height: 100%;'>
                 <div class='insight-title'>{title}</div>
                 <div class='insight-body'>{body}</div>
             </div>""", unsafe_allow_html=True)
@@ -139,7 +139,7 @@ def render():
          "Rides spike at 08:00 and 17:00 on weekdays, matching NYC office commute hours. "
          "This pattern is consistent across all three summer months, showing CitiBike is deeply "
          "integrated into daily work commutes. Fleet rebalancing should prioritise business "
-         "districts before 07:30 AM each morning."),
+         "districts before 07:30 AM each morning to guarantee dock availability during rush hour."),
         ("Insight 2: Weather Drives 30%+ Ride Reduction",
          "Days with precipitation above 2 mm see a significant drop in daily rides. "
          "Casual riders are most affected (up to 45% drop), while members reduce rides by about 20%. "
@@ -154,7 +154,7 @@ def render():
     for col, (title, body) in zip([c1, c2, c3], insights):
         with col:
             st.markdown(f"""
-            <div class='insight-card' style='min-height: 250px;'>
+            <div class='insight-card' style='min-height: 295px; height: 100%;'>
                 <div class='insight-title'>{title}</div>
                 <div class='insight-body'>{body}</div>
             </div>""", unsafe_allow_html=True)
