@@ -1,0 +1,13 @@
+# Ignore raw multi-gigabyte data folders
+202606-citibike-tripdata/
+202607-citibike-tripdata/
+202608-citibike-tripdata/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OS artifacts
+.DS_Store
+Thumbs.db
