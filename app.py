@@ -1,4 +1,5 @@
 import streamlit as st
+import importlib
 
 st.set_page_config(
     page_title="CitiBike NYC — Big Data Analytics",
@@ -8,6 +9,13 @@ st.set_page_config(
 )
 
 from pages_content import overview, demand_analysis, weather_impact, station_analysis, ml_prediction
+
+# Force fresh reload of all page submodules on every page view
+importlib.reload(overview)
+importlib.reload(demand_analysis)
+importlib.reload(weather_impact)
+importlib.reload(station_analysis)
+importlib.reload(ml_prediction)
 
 PAGES = {
     "Overview":          overview,
