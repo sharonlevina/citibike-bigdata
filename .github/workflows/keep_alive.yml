@@ -1,0 +1,23 @@
+name: Keep Streamlit App Alive
+
+on:
+  schedule:
+    # Trigger every 12 hours (00:00 and 12:00 UTC) to prevent Streamlit Cloud from idling
+    - cron: '0 0,12 * * *'
+  workflow_dispatch: # Allows manual trigger anytime from GitHub Actions tab
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Streamlit Dashboard
+        run: |
+          echo "Pinging https://citibike-bigdata.streamlit.app/ ..."
+          STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" https://citibike-bigdata.streamlit.app/)
+          echo "Response HTTP Status Code: $STATUS_CODE"
+          if [ "$STATUS_CODE" -ge 200 ] && [ "$STATUS_CODE" -lt 400 ]; then
+            echo "Dashboard is awake and healthy!"
+          else
+            echo "Notice: Status is $STATUS_CODE. Accessing to wake up..."
+            curl -s https://citibike-bigdata.streamlit.app/ > /dev/null
+          fi

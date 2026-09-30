@@ -9,6 +9,7 @@ st.set_page_config(
 )
 
 from pages_content import overview, demand_analysis, weather_impact, station_analysis, ml_prediction
+from pages_content import graph_analytics
 
 # Force fresh reload of all page submodules on every page view
 importlib.reload(overview)
@@ -16,6 +17,7 @@ importlib.reload(demand_analysis)
 importlib.reload(weather_impact)
 importlib.reload(station_analysis)
 importlib.reload(ml_prediction)
+importlib.reload(graph_analytics)
 
 PAGES = {
     "Overview":          overview,
@@ -23,6 +25,7 @@ PAGES = {
     "Weather Impact":    weather_impact,
     "Station Analysis":  station_analysis,
     "ML Prediction":     ml_prediction,
+    "Graph Analytics":   graph_analytics,
 }
 
 def load_css():

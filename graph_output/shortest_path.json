@@ -1,0 +1,10 @@
+{
+  "source": "8 Ave & W 16 St",
+  "target": "W 37 St & 10 Ave",
+  "path": [
+    "8 Ave & W 16 St",
+    "W 21 St & 6 Ave",
+    "W 37 St & 10 Ave"
+  ],
+  "path_length": 0.0392
+}
