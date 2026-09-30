@@ -32,6 +32,8 @@ Built for **COMP8035041 — Big Data Analytics** (Master of Information Technolo
 
 ## 🏗️ System Architecture
 
+![Citi Bike Big Data Architecture Pipeline](architecture_diagram.png)
+
 ```text
                                 [Data Sources]
         ┌─────────────────────────────┼─────────────────────────────┐
