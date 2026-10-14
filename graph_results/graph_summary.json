@@ -1,0 +1,172 @@
+{
+  "total_nodes": 272,
+  "total_edges": 444,
+  "top_in_degree": [
+    {
+      "station": "N 7 St & Driggs Ave",
+      "score": 12198
+    },
+    {
+      "station": "N 6 St & Bedford Ave",
+      "score": 9971
+    },
+    {
+      "station": "7 Ave & Central Park South",
+      "score": 9279
+    },
+    {
+      "station": "Vernon Blvd & 50 Ave",
+      "score": 8213
+    },
+    {
+      "station": "Franklin St & Dupont St",
+      "score": 6966
+    },
+    {
+      "station": "W 21 St & 6 Ave",
+      "score": 5762
+    },
+    {
+      "station": "Cooper Square & Astor Pl",
+      "score": 5596
+    },
+    {
+      "station": "Henry St & Grand St",
+      "score": 5439
+    },
+    {
+      "station": "9 Ave & W 33 St",
+      "score": 5092
+    },
+    {
+      "station": "5 Ave & E 72 St",
+      "score": 4538
+    }
+  ],
+  "top_out_degree": [
+    {
+      "station": "N 6 St & Bedford Ave",
+      "score": 12988
+    },
+    {
+      "station": "N 7 St & Driggs Ave",
+      "score": 12258
+    },
+    {
+      "station": "Central Park S & 6 Ave",
+      "score": 9227
+    },
+    {
+      "station": "Vernon Blvd & 50 Ave",
+      "score": 8532
+    },
+    {
+      "station": "Pier 61 at Chelsea Piers",
+      "score": 7906
+    },
+    {
+      "station": "W 21 St & 6 Ave",
+      "score": 7755
+    },
+    {
+      "station": "7 Ave & Central Park South",
+      "score": 7175
+    },
+    {
+      "station": "11 Ave & W 41 St",
+      "score": 6952
+    },
+    {
+      "station": "Franklin St & Dupont St",
+      "score": 6279
+    },
+    {
+      "station": "Ave A & E 14 St",
+      "score": 6222
+    }
+  ],
+  "top_betweenness": [
+    {
+      "station": "W 21 St & 6 Ave",
+      "score": 0.0301
+    },
+    {
+      "station": "Pier 61 at Chelsea Piers",
+      "score": 0.0236
+    },
+    {
+      "station": "E 17 St & Broadway",
+      "score": 0.0202
+    },
+    {
+      "station": "Greenwich Ave & 8 Ave",
+      "score": 0.019
+    },
+    {
+      "station": "8 Ave & W 16 St",
+      "score": 0.0186
+    },
+    {
+      "station": "11 Ave & W 41 St",
+      "score": 0.0149
+    },
+    {
+      "station": "Cooper Square & Astor Pl",
+      "score": 0.014
+    },
+    {
+      "station": "6 Ave & W 33 St",
+      "score": 0.0138
+    },
+    {
+      "station": "N 7 St & Driggs Ave",
+      "score": 0.0135
+    },
+    {
+      "station": "9 Ave & W 33 St",
+      "score": 0.0134
+    }
+  ],
+  "top_pagerank": [
+    {
+      "station": "7 Ave & Central Park South",
+      "score": 0.023
+    },
+    {
+      "station": "N 7 St & Driggs Ave",
+      "score": 0.0208
+    },
+    {
+      "station": "Vernon Blvd & 50 Ave",
+      "score": 0.0198
+    },
+    {
+      "station": "North Moore St & Greenwich St",
+      "score": 0.018
+    },
+    {
+      "station": "Franklin St & Dupont St",
+      "score": 0.0179
+    },
+    {
+      "station": "N 6 St & Bedford Ave",
+      "score": 0.017
+    },
+    {
+      "station": "2 Ave & E 72 St",
+      "score": 0.0142
+    },
+    {
+      "station": "46 Ave & 5 St",
+      "score": 0.0131
+    },
+    {
+      "station": "E 72 St & York Ave",
+      "score": 0.013
+    },
+    {
+      "station": "Broadway & Kent Ave",
+      "score": 0.0118
+    }
+  ]
+}

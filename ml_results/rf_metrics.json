@@ -1,0 +1,23 @@
+{
+  "model": "Random Forest Regressor",
+  "library": "Scikit-Learn",
+  "task": "Trip Duration Prediction",
+  "n_estimators": 100,
+  "max_depth": 10,
+  "train_size": 621630,
+  "test_size": 155408,
+  "mae_minutes": 5.85,
+  "rmse_minutes": 9.2,
+  "r2_score": 0.3591,
+  "features": [
+    "hour",
+    "day_of_week",
+    "month",
+    "member_encoded",
+    "bike_encoded",
+    "start_lat",
+    "start_lng",
+    "end_lat",
+    "end_lng"
+  ]
+}

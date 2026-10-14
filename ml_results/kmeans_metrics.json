@@ -1,0 +1,12 @@
+{
+  "model": "KMeans",
+  "library": "Spark MLlib",
+  "k": 4,
+  "silhouette_score": 0.4162,
+  "features": [
+    "total_trips",
+    "avg_duration",
+    "casual_ratio",
+    "electric_ratio"
+  ]
+}
