@@ -92,8 +92,8 @@ def render():
                 textfont=dict(size=11, color="#1e293b"),
             ))
             fig_pie.update_layout(
-                **base_layout(h=320),
-                legend=dict(font=dict(color="#475569", size=10), orientation="h", yanchor="bottom", y=-0.2, xanchor="center", x=0.5),
+                **base_layout(h=360, margin=dict(l=15, r=15, t=45, b=60)),
+                legend=dict(font=dict(color="#475569", size=10), orientation="h", yanchor="top", y=-0.08, xanchor="center", x=0.5),
                 title=dict(text="Cluster Station Share", font=dict(size=13, color="#0f172a")),
             )
             st.plotly_chart(fig_pie, use_container_width=True)
@@ -102,21 +102,22 @@ def render():
             fig_sc = go.Figure()
             for c in sorted(df_km["cluster"].unique()):
                 sub = df_km[df_km["cluster"] == c]
+                short_label = CLUSTER_LABELS[c].split("—")[0].strip()
                 fig_sc.add_trace(go.Scatter(
                     x=sub["total_trips"], y=sub["avg_duration"],
                     mode="markers",
-                    name=f"C{c}: {CLUSTER_LABELS[c]}",
+                    name=f"C{c}: {short_label}",
                     marker=dict(color=CLUSTER_COLORS[c], size=7, opacity=0.75,
                                 line=dict(color="#fff", width=0.5)),
-                    hovertemplate="<b>%{text}</b><br>Trips: %{x:,}<br>Avg Duration: %{y:.1f} min<extra></extra>",
+                    hovertemplate="<b>%{text}</b><br>Cluster: " + CLUSTER_LABELS[c] + "<br>Trips: %{x:,}<br>Avg Duration: %{y:.1f} min<extra></extra>",
                     text=sub["start_station_name"],
                 ))
             fig_sc.update_layout(
-                **base_layout(h=320),
+                **base_layout(h=360, margin=dict(l=15, r=15, t=45, b=60)),
                 xaxis=ax("Total Trips per Station"),
                 yaxis=ax("Avg Trip Duration (min)"),
-                legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0,
-                            font=dict(size=9, color="#475569")),
+                legend=dict(orientation="h", yanchor="top", y=-0.22, xanchor="center", x=0.5,
+                            font=dict(size=9.5, color="#475569")),
                 title=dict(text="Station Characterisation: Trips vs Duration", font=dict(size=13, color="#0f172a")),
             )
             st.plotly_chart(fig_sc, use_container_width=True)
