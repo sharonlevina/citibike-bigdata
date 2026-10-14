@@ -57,11 +57,13 @@ def ax(title="", **kw):
 
 def base_layout(t=30, h=320, **kw):
     T = PLOTLY_THEME
+    default_margin = dict(l=15, r=15, t=t, b=25)
+    margin = kw.pop("margin", default_margin)
     d = dict(
         paper_bgcolor = T["paper_bgcolor"],
         plot_bgcolor  = T["plot_bgcolor"],
         font=dict(color=T["font_color"], family="Inter, sans-serif", size=11),
-        margin=dict(l=15, r=15, t=t, b=25),
+        margin=margin,
         height=h,
     )
     d.update(kw)

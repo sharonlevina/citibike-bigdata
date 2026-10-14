@@ -4,7 +4,7 @@ import sys, os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from data_loader import (
     load_rush_hour, load_weekend, load_member_behavior,
-    base_layout, ax, C_BLUE, C_VIOLET, C_AMBER, PLOTLY_THEME
+    base_layout, ax, C_BLUE, C_VIOLET, C_AMBER, C_TEAL, PLOTLY_THEME
 )
 
 T = PLOTLY_THEME
@@ -73,44 +73,46 @@ def render():
     st.markdown("<div class='section-header'>Weekday vs Weekend Patterns</div>", unsafe_allow_html=True)
     df_ww = _weekend()
     if not df_ww.empty:
-        df_ww = df_ww.sort_values("day_of_week")
-        dow_map = {1:"Mon",2:"Tue",3:"Wed",4:"Thu",5:"Fri",6:"Sat",7:"Sun"}
-        df_ww["day_name"] = df_ww["day_of_week"].map(dow_map)
-
         col1, col2 = st.columns(2)
         with col1:
             fig2 = go.Figure()
-            colors = df_ww["is_weekend"].map({"Weekday": C_BLUE, "Weekend": C_AMBER})
             fig2.add_trace(go.Bar(
-                x=df_ww["day_name"], y=df_ww["total_trips"],
-                marker_color=colors, marker_line_width=0,
-                text=[f"{v/1e6:.2f}M" if v >= 1e6 else f"{v:,}" for v in df_ww["total_trips"]],
-                textposition="outside", textfont=dict(size=10, color="#334155"),
+                x=df_ww["day_type"], y=df_ww["total_member"],
+                name="Member", marker_color=C_BLUE, marker_line_width=0,
+                text=[f"{v/1e6:.2f}M" for v in df_ww["total_member"]],
+                textposition="inside", textfont=dict(size=10, color="#ffffff"),
+            ))
+            fig2.add_trace(go.Bar(
+                x=df_ww["day_type"], y=df_ww["total_casual"],
+                name="Casual", marker_color=C_VIOLET, marker_line_width=0,
+                text=[f"{v/1e6:.2f}M" for v in df_ww["total_casual"]],
+                textposition="inside", textfont=dict(size=10, color="#ffffff"),
             ))
             fig2.update_layout(
                 **base_layout(h=300),
-                xaxis=ax("Day of Week"),
+                barmode="stack",
+                xaxis=ax("Schedule Type"),
                 yaxis=ax("Total Trips"),
-                showlegend=False,
-                title=dict(text="Trip Volume by Day", font=dict(size=13, color="#0f172a")),
+                legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1,
+                            font=dict(size=11, color="#475569")),
+                title=dict(text="Trip Volume: Member vs Casual", font=dict(size=13, color="#0f172a")),
             )
             st.plotly_chart(fig2, use_container_width=True)
 
         with col2:
             fig3 = go.Figure()
-            fig3.add_trace(go.Scatter(
-                x=df_ww["day_name"], y=df_ww["avg_duration"],
-                mode="lines+markers",
-                line=dict(color=C_VIOLET, width=2.5, shape="spline"),
-                marker=dict(size=8, color=C_VIOLET),
-                fill="tozeroy", fillcolor=C_VIOLET + "15",
+            fig3.add_trace(go.Bar(
+                x=df_ww["day_type"], y=df_ww["avg_duration_min"].round(1),
+                name="Avg Duration (min)", marker_color=C_TEAL, marker_line_width=0,
+                text=[f"{v:.1f} min" for v in df_ww["avg_duration_min"]],
+                textposition="outside", textfont=dict(size=10, color="#334155"),
             ))
             fig3.update_layout(
                 **base_layout(h=300),
-                xaxis=ax("Day of Week"),
-                yaxis=ax("Avg Duration (min)"),
+                xaxis=ax("Schedule Type"),
+                yaxis=ax("Minutes"),
                 showlegend=False,
-                title=dict(text="Avg Trip Duration by Day", font=dict(size=13, color="#0f172a")),
+                title=dict(text="Average Trip Duration (Weekday vs Weekend)", font=dict(size=13, color="#0f172a")),
             )
             st.plotly_chart(fig3, use_container_width=True)
 

@@ -68,18 +68,21 @@ def render():
         ).reset_index()
         summary["Segment"] = summary["cluster"].map(CLUSTER_LABELS)
 
-        col_t, col_s = st.columns([3, 2])
-        with col_t:
-            import pandas as pd
-            display_df = summary[["cluster", "Segment", "Stations", "Avg_Trips", "Avg_Duration", "Pct_Casual", "Pct_Electric"]].copy()
-            display_df.columns = ["Cluster", "Segment Description", "Stations", "Avg Trips", "Avg Duration (min)", "% Casual", "% Electric"]
-            display_df["Avg Trips"] = display_df["Avg Trips"].map("{:,.0f}".format)
-            display_df["Avg Duration (min)"] = display_df["Avg Duration (min)"].map("{:.1f}".format)
-            display_df["% Casual"] = display_df["% Casual"].map("{:.1f}%".format)
-            display_df["% Electric"] = display_df["% Electric"].map("{:.1f}%".format)
-            st.dataframe(display_df, use_container_width=True, hide_index=True)
+        import pandas as pd
+        display_df = summary[["cluster", "Segment", "Stations", "Avg_Trips", "Avg_Duration", "Pct_Casual", "Pct_Electric"]].copy()
+        display_df.columns = ["Cluster", "Segment Description", "Stations", "Avg Trips", "Avg Duration (min)", "% Casual", "% Electric"]
+        display_df["Avg Trips"] = display_df["Avg Trips"].map("{:,.0f}".format)
+        display_df["Avg Duration (min)"] = display_df["Avg Duration (min)"].map("{:.1f}".format)
+        display_df["% Casual"] = display_df["% Casual"].map("{:.1f}%".format)
+        display_df["% Electric"] = display_df["% Electric"].map("{:.1f}%".format)
+        
+        # Display full-width table so all columns fit cleanly without truncation
+        st.dataframe(display_df, use_container_width=True, hide_index=True)
 
-        with col_s:
+        st.markdown("<br/>", unsafe_allow_html=True)
+        col_pie, col_sc = st.columns([2, 3])
+
+        with col_pie:
             fig_pie = go.Figure(go.Pie(
                 labels=[CLUSTER_LABELS[i] for i in summary["cluster"]],
                 values=summary["Stations"],
@@ -88,32 +91,35 @@ def render():
                             line=dict(color="#fff", width=2)),
                 textfont=dict(size=11, color="#1e293b"),
             ))
-            fig_pie.update_layout(**base_layout(h=260),
-                                  legend=dict(font=dict(color="#475569", size=10)))
+            fig_pie.update_layout(
+                **base_layout(h=320),
+                legend=dict(font=dict(color="#475569", size=10), orientation="h", yanchor="bottom", y=-0.2, xanchor="center", x=0.5),
+                title=dict(text="Cluster Station Share", font=dict(size=13, color="#0f172a")),
+            )
             st.plotly_chart(fig_pie, use_container_width=True)
 
-        # Scatter
-        fig_sc = go.Figure()
-        for c in sorted(df_km["cluster"].unique()):
-            sub = df_km[df_km["cluster"] == c]
-            fig_sc.add_trace(go.Scatter(
-                x=sub["total_trips"], y=sub["avg_duration"],
-                mode="markers",
-                name=f"Cluster {c}: {CLUSTER_LABELS[c]}",
-                marker=dict(color=CLUSTER_COLORS[c], size=7, opacity=0.75,
-                            line=dict(color="#fff", width=0.5)),
-                hovertemplate="<b>%{text}</b><br>Trips: %{x:,}<br>Avg Duration: %{y:.1f} min<extra></extra>",
-                text=sub["start_station_name"],
-            ))
-        fig_sc.update_layout(
-            **base_layout(h=340),
-            xaxis=ax("Total Trips per Station"),
-            yaxis=ax("Avg Trip Duration (min)"),
-            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0,
-                        font=dict(size=10, color="#475569")),
-            title=dict(text="Station Characterisation: Trip Volume vs Duration", font=dict(size=13, color="#0f172a")),
-        )
-        st.plotly_chart(fig_sc, use_container_width=True)
+        with col_sc:
+            fig_sc = go.Figure()
+            for c in sorted(df_km["cluster"].unique()):
+                sub = df_km[df_km["cluster"] == c]
+                fig_sc.add_trace(go.Scatter(
+                    x=sub["total_trips"], y=sub["avg_duration"],
+                    mode="markers",
+                    name=f"C{c}: {CLUSTER_LABELS[c]}",
+                    marker=dict(color=CLUSTER_COLORS[c], size=7, opacity=0.75,
+                                line=dict(color="#fff", width=0.5)),
+                    hovertemplate="<b>%{text}</b><br>Trips: %{x:,}<br>Avg Duration: %{y:.1f} min<extra></extra>",
+                    text=sub["start_station_name"],
+                ))
+            fig_sc.update_layout(
+                **base_layout(h=320),
+                xaxis=ax("Total Trips per Station"),
+                yaxis=ax("Avg Trip Duration (min)"),
+                legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0,
+                            font=dict(size=9, color="#475569")),
+                title=dict(text="Station Characterisation: Trips vs Duration", font=dict(size=13, color="#0f172a")),
+            )
+            st.plotly_chart(fig_sc, use_container_width=True)
 
     # ── Model B: Random Forest ────────────────────────────────────────────────
     st.markdown("<div class='section-header'>Model B — Trip Duration Prediction (Scikit-Learn Random Forest)</div>", unsafe_allow_html=True)

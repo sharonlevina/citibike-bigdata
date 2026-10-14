@@ -65,11 +65,10 @@ def render():
                 textfont=dict(size=10, color="#334155"),
             ))
             fig_pr.update_layout(
-                **base_layout(h=360),
+                **base_layout(h=360, margin=dict(l=10, r=40, t=35, b=25)),
                 title=dict(text="Top 10 Super Hubs (PageRank Centrality)", font=dict(size=13, color="#0f172a")),
                 xaxis=ax("PageRank Score"),
                 yaxis=ax(""),
-                margin=dict(l=10, r=40, t=35, b=25),
             )
             st.plotly_chart(fig_pr, use_container_width=True)
 
@@ -90,11 +89,10 @@ def render():
                 textfont=dict(size=10, color="#334155"),
             ))
             fig_bc.update_layout(
-                **base_layout(h=360),
+                **base_layout(h=360, margin=dict(l=10, r=40, t=35, b=25)),
                 title=dict(text="Top 10 Bridge Nodes (Betweenness Centrality)", font=dict(size=13, color="#0f172a")),
                 xaxis=ax("Betweenness Centrality"),
                 yaxis=ax(""),
-                margin=dict(l=10, r=40, t=35, b=25),
             )
             st.plotly_chart(fig_bc, use_container_width=True)
 

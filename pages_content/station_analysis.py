@@ -50,11 +50,10 @@ def render():
                 textfont=dict(size=10, color="#334155"),
             ))
             fig_start.update_layout(
-                **base_layout(h=380),
+                **base_layout(h=380, margin=dict(l=10, r=40, t=35, b=25)),
                 title=dict(text="Top 12 Origin Stations (Departures)", font=dict(size=13, color="#0f172a")),
                 xaxis=ax("Total Departures"),
                 yaxis=ax(""),
-                margin=dict(l=10, r=40, t=35, b=25),
             )
             st.plotly_chart(fig_start, use_container_width=True)
 
@@ -75,11 +74,10 @@ def render():
                 textfont=dict(size=10, color="#334155"),
             ))
             fig_end.update_layout(
-                **base_layout(h=380),
+                **base_layout(h=380, margin=dict(l=10, r=40, t=35, b=25)),
                 title=dict(text="Top 12 Destination Stations (Arrivals)", font=dict(size=13, color="#0f172a")),
                 xaxis=ax("Total Arrivals"),
                 yaxis=ax(""),
-                margin=dict(l=10, r=40, t=35, b=25),
             )
             st.plotly_chart(fig_end, use_container_width=True)
 
@@ -103,11 +101,10 @@ def render():
                 textfont=dict(size=10, color="#ffffff"),
             ))
             fig_def.update_layout(
-                **base_layout(h=300),
+                **base_layout(h=300, margin=dict(l=10, r=20, t=35, b=25)),
                 title=dict(text="Top Deficit Stations (Outflow > Inflow)", font=dict(size=13, color="#991b1b")),
                 xaxis=ax("Net Flow (Trips)"),
                 yaxis=ax(""),
-                margin=dict(l=10, r=20, t=35, b=25),
             )
             st.plotly_chart(fig_def, use_container_width=True)
 
@@ -122,11 +119,10 @@ def render():
                 textfont=dict(size=10, color="#ffffff"),
             ))
             fig_sur.update_layout(
-                **base_layout(h=300),
+                **base_layout(h=300, margin=dict(l=10, r=20, t=35, b=25)),
                 title=dict(text="Top Surplus Stations (Inflow > Outflow)", font=dict(size=13, color="#115e59")),
                 xaxis=ax("Net Flow (Trips)"),
                 yaxis=ax(""),
-                margin=dict(l=10, r=20, t=35, b=25),
             )
             st.plotly_chart(fig_sur, use_container_width=True)
 
@@ -135,34 +131,48 @@ def render():
     if not df_start.empty and "start_lat" in df_start.columns and "start_lng" in df_start.columns:
         map_df = df_start.dropna(subset=["start_lat", "start_lng"]).head(100).copy()
         
-        fig_map = go.Figure()
-        fig_map.add_trace(go.Scattermapbox(
-            lat=map_df["start_lat"],
-            lon=map_df["start_lng"],
-            mode="markers",
-            marker=dict(
-                size=np.clip(map_df["total_departures"] / map_df["total_departures"].max() * 24, 6, 26),
-                color=map_df["total_departures"],
-                colorscale=[[0, "#60a5fa"], [0.5, "#2563eb"], [1, "#1e3a8a"]],
-                showscale=True,
-                colorbar=dict(title=dict(text="Departures", font=dict(size=11)), thickness=12, len=0.8),
-                opacity=0.85
-            ),
-            text=map_df["start_station_name"],
-            hovertemplate="<b>%{text}</b><br>Departures: %{marker.color:,}<extra></extra>"
-        ))
-        
-        fig_map.update_layout(
-            mapbox=dict(
-                style="carto-positron",
-                zoom=11.2,
-                center=dict(lat=40.745, lon=-73.985),
-            ),
-            margin=dict(l=0, r=0, t=0, b=0),
-            height=420,
-            paper_bgcolor="#ffffff"
-        )
-        st.plotly_chart(fig_map, use_container_width=True)
+        ScatterMapTrace = getattr(go, "Scattermap", getattr(go, "Scattermapbox", None))
+        if ScatterMapTrace is not None:
+            fig_map = go.Figure()
+            fig_map.add_trace(ScatterMapTrace(
+                lat=map_df["start_lat"],
+                lon=map_df["start_lng"],
+                mode="markers",
+                marker=dict(
+                    size=np.clip(map_df["total_departures"] / map_df["total_departures"].max() * 24, 6, 26),
+                    color=map_df["total_departures"],
+                    colorscale=[[0, "#60a5fa"], [0.5, "#2563eb"], [1, "#1e3a8a"]],
+                    showscale=True,
+                    colorbar=dict(title=dict(text="Departures", font=dict(size=11)), thickness=12, len=0.8),
+                    opacity=0.85
+                ),
+                text=map_df["start_station_name"],
+                hovertemplate="<b>%{text}</b><br>Departures: %{marker.color:,}<extra></extra>"
+            ))
+            
+            if hasattr(go, "Scattermap"):
+                fig_map.update_layout(
+                    map=dict(
+                        style="open-street-map",
+                        zoom=11.2,
+                        center=dict(lat=40.745, lon=-73.985),
+                    ),
+                    margin=dict(l=0, r=0, t=0, b=0),
+                    height=420,
+                    paper_bgcolor="#ffffff"
+                )
+            else:
+                fig_map.update_layout(
+                    mapbox=dict(
+                        style="carto-positron",
+                        zoom=11.2,
+                        center=dict(lat=40.745, lon=-73.985),
+                    ),
+                    margin=dict(l=0, r=0, t=0, b=0),
+                    height=420,
+                    paper_bgcolor="#ffffff"
+                )
+            st.plotly_chart(fig_map, use_container_width=True)
 
     # ── Top Transit Routes ───────────────────────────────────────────────────
     st.markdown("<div class='section-header'>Top 10 High-Frequency Transit Corridors</div>", unsafe_allow_html=True)
